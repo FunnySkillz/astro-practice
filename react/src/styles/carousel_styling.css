@@ -1,0 +1,12 @@
+#slides >P 
+{
+    font-size: 18px;
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.5; 
+;
+}
+#slides > h1{
+    font-size: 36px;
+    font-weight: 600px ;
+}

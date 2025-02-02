@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import InteractiveCarousel from '../components/customizedui/interactivecarousel';
+import BasicLayout from "../layouts/BasicLayout.astro";
+import Header from "../components/header.astro";
+import type { ICarouselItem } from "../components/customizedui/interactivecarousel";
+import { marked } from 'marked'; 
+
+
+
+// Fetch carouselSlides collection from markdown files
+const carouselSlides = await getCollection("carouselSlides");
+
+// Map the carouselSlides data to the ICarouselItem interface
+const carouselItems: ICarouselItem[] = await Promise.all(
+  carouselSlides.map(async (slide) => {
+    const body = await marked(slide.body); // Await the result of marked
+    return {
+      image: slide.data.image,              // Assuming slide.data.image contains the image path
+      imagealt: slide.data.title,           // Assuming slide.data.title is used for the alt text
+      body: body,                           // Use the resolved body (string)
+      heading: slide.data.title,            // Use the title for the heading
+    };
+  })
+);
+---
+
+<BasicLayout title="Aerabyte Solutions">
+
+  <Header />
+ 
+  <div class="w-5/6"> 
+    <InteractiveCarousel carouselItems={carouselItems} client:load />
+  </div>
+
+</BasicLayout>

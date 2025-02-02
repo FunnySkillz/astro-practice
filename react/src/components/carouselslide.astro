@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+
+type Props = {
+    carouselSlide: CollectionEntry<'carouselSlides'>;
+};
+ 
+const { carouselSlide } = Astro.props
+
+const {Content} = await carouselSlide.render();
+
+ 
+
+---
+
+<div class="w-5/6 flex">
+    <img src={carouselSlide.data.image} alt={carouselSlide.data.title} class="w-1/2 h-auto mx-4">
+    <div class="w-2/3 text-center">
+        <Content/>
+    </div>
+</div>
